@@ -1,0 +1,4 @@
+TODO:
+*make it work with gdb/mi
+*add some other architectures to debug (x86,x86_64, etc.)
+*improve the lattice drawing algorithmn.

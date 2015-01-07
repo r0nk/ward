@@ -1,1 +1,4 @@
-ward is a new kind of debugger, that draws out the state machine as you debug.
+Ward is a new kind of debugger, that draws out the state machine of the program you're debugging. 
+
+It currently only works with brainfuck, but (hopefully) will be ported to
+other platforms soon.
