@@ -1,7 +1,0 @@
-RIS is a simplified 8 bit instruction set for testing.
-opcode name			opcode number	size
-mov a,b					0	3
-add a,b					1	3
-jump a					2	2
-jz a,b (jump to a if b is zero)		3	3
-
