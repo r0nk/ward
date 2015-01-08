@@ -1,4 +1,5 @@
 //java virtual machine, version 8
+//holy structures batman
 typedef struct{
 	int pid;
 	char * filename;
@@ -128,8 +129,361 @@ typedef struct{
 	u2 attributes_count;
 	attribute_info attributes[attributes_count];
 } field_info;
-//leftoff on page 90 of the specification
-
+typedef struct{
+	u2 access_flags;
+	u2 name_index;
+	u2 descriptor_index;
+	u2 attributes_count;
+	attribute_info attributes[attributes_count];
+} method_info;
+typedef struct{
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u1 info[attribute_length];
+} attribute_info;
+typedef struct{
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u2 constantvalue_index;
+}
+typedef struct{
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u2 max_stack;
+	u2 max_locals;
+	u4 code_length;
+	u1 code[code_length];
+	u2 exception_table_length;
+	{
+		u2 start_pc;
+		u2 end_pc;
+		u2 handler_pc;
+		u2 catch_type;
+	} exception_table[exception_table_length];
+	u2 attributes_count;
+	attribute_info attributes[attributes_count];
+}
+typedef struct{
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u2 number_of_entries;
+	stack_map_frame entries[number_of_entries];
+} StackMapTable_attribute;
+union verification_type_info {
+	Top_variable_info;
+	Integer_variable_info;
+	Float_variable_info;
+	Long_variable_info;
+	Double_variable_info;
+	Null_variable_info;
+	UninitializedThis_variable_info;
+	Object_variable_info;
+}
+typdef struct {
+	u1 tag = ITEM_Integer; /* 1 */
+}Integer_variable_info
+typedef struct {
+	u1 tag = ITEM_Float; /* 2 */
+}Float_variable_info;
+typedef struct {
+	u1 tag = ITEM_Null; /* 5 */
+}Null_variable_info;
+typedef struct {
+	u1 tag = ITEM_UninitializedThis; /* 6 */
+}UninitializedThis_variable_info;
+typedef struct {
+	u1 tag = ITEM_Object; /* 7 */
+	u2 cpool_index;
+}Object_variable_info;
+typedef struct {
+	u1 tag = ITEM_Uninitialized /* 8 */
+		u2 offset;
+}Uninitialized_variable_info;
+typedef struct {
+	u1 tag = ITEM_Long; /* 4 */
+}Long_variable_info;
+typedef struct {
+	u1 tag = ITEM_Double; /* 3 */
+}Double_variable_info;
+union stack_map_frame {
+	same_frame;
+	same_locals_1_stack_item_frame;
+	same_locals_1_stack_item_frame_extended;
+	chop_frame;
+	same_frame_extended;
+	append_frame;
+	full_frame;
+}
+typedef struct {
+	u1 frame_type = SAME; /* 0-63 */
+}same_frame;
+typedef struct {
+	u1 frame_type = SAME_LOCALS_1_STACK_ITEM; /* 64-127 */
+	verification_type_info stack[1];
+}same_locals_1_stack_item_frame;
+typedef struct {
+	u1 frame_type = SAME_LOCALS_1_STACK_ITEM_EXTENDED; /* 247 */
+	u2 offset_delta;
+	verification_type_info stack[1];
+}same_locals_1_stack_item_frame_extended;
+typedef struct {
+	u1 frame_type = CHOP; /* 248-250 */
+	u2 offset_delta;
+}chop_frame;
+typedef struct {
+	u1 frame_type = SAME_FRAME_EXTENDED; /* 251 */
+	u2 offset_delta;
+}same_frame_extended;
+typedef struct {
+	u1 frame_type = APPEND; /* 252-254 */
+	u2 offset_delta;
+	verification_type_info locals[frame_type - 251];
+}append_frame;
+typedef struct {
+	u1 frame_type = FULL_FRAME; /* 255 */
+	u2 offset_delta;
+	u2 number_of_locals;
+	verification_type_info locals[number_of_locals];
+	u2 number_of_stack_items;
+	verification_type_info stack[number_of_stack_items];
+}full_frame;
+typedef struct {
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u2 number_of_exceptions;
+	u2 exception_index_table[number_of_exceptions];
+}Exceptions_attribute;
+typedef struct {
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u2 number_of_classes;
+	{
+		u2 inner_class_info_index;
+		u2 outer_class_info_index;
+		u2 inner_name_index;
+		u2 inner_class_access_flags;
+	} classes[number_of_classes];
+}InnerClasses_attribute;
+typedef struct {
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u2 class_index;
+	u2 method_index;
+}EnclosingMethod_attribute;
+typedef struct {
+	u2 attribute_name_index;
+	u4 attribute_length;
+}Synthetic_attribute;
+typedef struct {
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u2 signature_index;
+}Signature_attribute;
+typedef struct {
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u2 sourcefile_index;
+}SourceFile_attribute;
+typedef struct {
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u1 debug_extension[attribute_length];
+}SourceDebugExtension_attribute;
+typedef struct {
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u2 line_number_table_length;
+	{
+		u2 start_pc;
+		u2 line_number;
+	} line_number_table[line_number_table_length];
+}LineNumberTable_attribute;
+typedef struct {
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u2 local_variable_table_length;
+	{
+		u2 start_pc;
+		u2 length;
+		u2 name_index;
+		u2 descriptor_index;
+		u2 index;
+	} local_variable_table[local_variable_table_length];
+}LocalVariableTable_attribute;
+typedef struct {
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u2 local_variable_type_table_length;
+	{
+		u2 start_pc;
+		u2 length;
+		u2 name_index;
+		u2 signature_index;
+		u2 index;
+	} local_variable_type_table[local_variable_type_table_length];
+} LocalVariableTypeTable_attribute;
+typedef struct {
+	u2 attribute_name_index;
+	u4 attribute_length;
+}Deprecated_attribute;
+typedef struct {
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u2 num_annotations;
+	annotation annotations[num_annotations];
+}RuntimeVisibleAnnotations_attribute;
+typedef struct {
+	u2 type_index;
+	u2 num_element_value_pairs;
+	{
+		u2
+			element_name_index;
+		element_value value;
+	} element_value_pairs[num_element_value_pairs];
+} annotation;
+typedef struct {
+	u1 tag;
+	union {
+		u2 const_value_index;
+		{
+			u2 type_name_index;
+			u2 const_name_index;
+		} enum_const_value;
+		u2 class_info_index;
+		annotation annotation_value;
+		{
+			u2
+				num_values;
+			element_value values[num_values];
+		} array_value;
+	} value;
+}element_value
+typedef struct {
+	u2	attribute_name_index;
+	u4	attribute_length;
+	u2	num_annotations;
+	annotation annotations[num_annotations];
+}RuntimeInvisibleAnnotations_attribute;
+typedef struct {
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u1 num_parameters;
+	{
+		u2
+			num_annotations;
+		annotation annotations[num_annotations];
+	} parameter_annotations[num_parameters];
+}RuntimeVisibleParameterAnnotations_attribute
+typedef struct {
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u1 num_parameters;
+	{
+		u2
+			num_annotations;
+		annotation annotations[num_annotations];
+	} parameter_annotations[num_parameters];
+}RuntimeInvisibleParameterAnnotations_attribute;
+typedef struct {
+	u2	attribute_name_index;
+	u4	attribute_length;
+	u2	num_annotations;
+	type_annotation annotations[num_annotations];
+}RuntimeVisibleTypeAnnotations_attribute;
+typedef struct {
+	u1 target_type;
+	union {
+		type_parameter_target;
+		supertype_target;
+		type_parameter_bound_target;
+		empty_target;
+		method_formal_parameter_target;
+		throws_target;
+		localvar_target;
+		catch_target;
+		offset_target;
+		type_argument_target;
+	} target_info;
+	type_path target_path;
+	u2 type_index;
+	u2 num_element_value_pairs;
+	{
+		u2 element_name_index;
+		element_value value;
+	} element_value_pairs[num_element_value_pairs];
+}type_annotation;
+typedef struct {
+	u1 type_parameter_index;
+}type_parameter_target;
+typedef struct {
+	u2 supertype_index;
+}supertype_target;
+typedef struct {
+	u1 type_parameter_index;
+	u1 bound_index;
+}type_parameter_bound_target;
+typedef struct {} empty_target;
+typedef struct {
+	u1 formal_parameter_index;
+}formal_parameter_target;
+typedef struct {
+	u2 throws_type_index;
+}throws_target;
+typedef struct {
+	u2 table_length;
+	{
+		u2 start_pc;
+		u2 length;
+		u2 index;
+	} table[table_length];
+}localvar_target;
+typedef struct {
+	u2 exception_table_index;
+}catch_target;
+typedef struct {
+	u2 offset;
+}offset_target;
+typedef struct {
+	u2 offset;
+	u1 type_argument_index;
+}type_argument_target;
+typedef struct {
+	u1 path_length;
+	{
+		u1 type_path_kind;
+		u1 type_argument_index;
+	} path[path_length];
+}type_path;
+typedef struct {
+	u2	attribute_name_index;
+	u4	attribute_length;
+	u2	num_annotations;
+	type_annotation annotations[num_annotations];
+}RuntimeInvisibleTypeAnnotations_attribute;
+typedef struct {
+	u2	attribute_name_index;
+	u4	attribute_length;
+	element_value default_value;
+}AnnotationDefault_attribute;
+typedef struct {
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u2 num_bootstrap_methods;
+	{
+		u2 bootstrap_method_ref;
+		u2 num_bootstrap_arguments;
+		u2 bootstrap_arguments[num_bootstrap_arguments];
+	} bootstrap_methods[num_bootstrap_methods];
+}BootstrapMethods_attribute
+typedef struct {
+	u2 attribute_name_index;
+	u4 attribute_length;
+	u1 parameters_count;
+	{
+		u2 name_index;
+		u2 access_flags;
+	} parameters[parameters_count];
+}MethodParameters_attribute
 typedef enum{//if the mnemonics is a c/c++ keyword, its prefixed with '_'
 	//constants
 	nop,
