@@ -3,5 +3,4 @@ Ward is a new kind of debugger, that draws out the state machine of the program 
 It currently only works with brainfuck, but (hopefully) will be ported to
 other platforms soon.
 
-screenshot:
-http://i.imgur.com/PINcCUy.gif
+![screenshot](http://i.imgur.com/PINcCUy.gif)
