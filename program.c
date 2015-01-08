@@ -3,8 +3,8 @@
 #include <signal.h>
 #include <unistd.h>
 
-void parseHeader(Program p){
-	//store the information from the file header into the program struct
+void parseHeader(/*header or whatever should go here*/){
+	//TODO store the information from the header into the program struct
 //	if(strncmp(p.memory,"\x7F""ELF",4) == 0){
 //		parseELF(p);
 //		return;
@@ -35,10 +35,10 @@ void readFile(char * filename,char * memory){
 		memory[i]=0;
 	fclose(fp);
 }
-Program * getProgram(int pid,char * filename){
+VirtualMachine * getProgram(int pid,char * filename){
 //TODO make the program decide to either go with gdb or our opcodes
-	Program *p;
-	p = calloc(sizeof(Program),1);
+	VirtualMachine *p;
+	p = calloc(sizeof(VirtualMachine),1);
 	p->instructionPointer=0;
 	p->memory = calloc(1000,sizeof(char));
 	p->dataPointer=200;//TODO brainfuck dependent
@@ -52,26 +52,23 @@ Program * getProgram(int pid,char * filename){
 	//}
 	return p;
 }
-word getInstructionPointer(Program p){
-	return p.instructionPointer;
-	//return p.regs.rip;
-}
-void mapOpcodes(Program *p,word insp,int i){
+void mapOpcodes(VirtualMachine *p,word insp,int i){
 //maps opcodes into instructions, starting at insp
 }
-void refreshProgramImage(){
+void refreshVMImage(){
 //refreshes the registers, memory image, etc. of the program.
+//useful for when debugging running processes with gdb
 	//getRegisters(program.pid,&program.regs);
 	//mapOpcodes(&p,getInstructionPointer(p));  //TODO
 }
-void sendInput(Program *p, char input){
-	p->memory[p->dataPointer]=input;//TODO this is brainfuck specific
-	p->waitingForInput=0;
+void sendInput(VirtualMachine *v, char input){
+	v->memory[v->dataPointer]=input;//TODO this is brainfuck specific
+	v->waitingForInput=0;
 }
-void singleStep(Program *p){
-	if(p->waitingForInput){
+void singleStep(VirtualMachine *v){
+	if(v->waitingForInput){
 		status = "program is waiting for input";
 		return;
 	}
-	doInstruction(p);
+	doInstruction(v);
 }

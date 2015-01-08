@@ -30,7 +30,7 @@ word unhandledDestination(Lattice *l){
 				return l->elements[i].destinations[j];
 	return 0;
 }
-Element * getElement(Program *p,word addr){
+Element * getElement(VirtualMachine *v,word addr){
 	Element * e = calloc(sizeof(Element),1);
 	e->value=0;
 	e->address=addr;
@@ -39,7 +39,7 @@ Element * getElement(Program *p,word addr){
 	do {
 		if(addr>MAXMEMORY)
 			return e;
-		o=readOpcode(p,addr);
+		o=readOpcode(v,addr);
 		if(!isValid(o))
 			return e;
 		addr+=o.size;
@@ -66,14 +66,14 @@ void freeLattice(Lattice * l){
 	l->elements = malloc(1);
 	l->cardinality = 0;
 }
-void updateLattice(Program *p,Lattice *l){
+void updateLattice(VirtualMachine *v,Lattice *l){
 	int i;
 	freeLattice(l);
-	Element * e = getElement(p,p->entryPoint);
+	Element * e = getElement(v,v->entryPoint);
 	addElement(*e,l);
 	free(e);
 	while(unhandledDestination(l)){
-		e = getElement(p,unhandledDestination(l));
+		e = getElement(v,unhandledDestination(l));
 		addElement(*e,l);
 		free(e);
 	}
@@ -132,10 +132,10 @@ void combineLeastElements(Lattice *l){
 	}
 	combineElements(l,&l->elements[lsi],l->elements[lsi].moreThan[lsj]);
 }
-Lattice * generateRootLattice(Program *p){
+Lattice * generateRootLattice(VirtualMachine *v){
 	Lattice *l = calloc(1,sizeof(Lattice));
 	l->elements = calloc(1,sizeof(Element));
-	updateLattice(p,l);
+	updateLattice(v,l);
 	return l;
 }
 Lattice * generateDisplayLattice(Lattice root,int desiredNumElements){

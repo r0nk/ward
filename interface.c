@@ -5,20 +5,20 @@ void handle(int in){
 	switch(in){
 		case 'R':
 			{
-			updateLattice(program,lattice);
+			updateLattice(virtualMachine,lattice);
 			shuffleLattice(20,0,*lattice);
 			}
 			break;
 		case '`':
 			//send the program (being debuged) a char of input
-			sendInput(program,input());
+			sendInput(virtualMachine,input());
 			break;
 		case '~': 
 			//continuously send the program(being debugged) input
 			{
 			int in;
 			while((in = input())!='~')
-				sendInput(program,in);
+				sendInput(virtualMachine,in);
 			}
 			break;
 		case 'h':
@@ -42,7 +42,7 @@ void handle(int in){
 			exit(0);
 			break;
 		case ' ':
-			singleStep(program);
+			singleStep(virtualMachine);
 			break;
 	}
 }

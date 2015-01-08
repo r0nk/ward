@@ -16,7 +16,7 @@ typedef struct{
 	//TODO heap stuff
 	//TODO Method Area
 	//TODO Run-Time Constant Pool 
-}Program;
+} VirtualMachine;
 typedef struct{
 	u4 magic;
 	u2 minor_version;

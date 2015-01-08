@@ -1,3 +1,5 @@
+//all the globals go in this file
+//If it doesn't make sense in this context, it probably shouldn't be a global.
 char *status = "<status>";
 char *debug = "";
 int cX,cY = 0;//cursor x,y
@@ -15,7 +17,7 @@ void deInitGraphics();
 void programOutput(char c);
 #include "globals.c"
 #include "program.h"
-Program *program;
+VirtualMachine * virtualMachine;
 #include "program.c"
 #include "wardLattice.c"
 Lattice *lattice;

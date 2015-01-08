@@ -76,7 +76,7 @@ void drawElements(){
 	}
 	for(i=0;i<nDrawnElements;i++){
 		//find the element with ip in it and highlight it.
-		if(((drawnElements[i].e->address)<=(program->instructionPointer))&&
+		if(((drawnElements[i].e->address)<=(virtualMachine->instructionPointer))&&
 				(drawnElements[i].e->address)>(drawnElements[closest].e->address))
 			closest=i;
 	}

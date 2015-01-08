@@ -39,25 +39,25 @@ void deInitGraphics(){
 	free(outputDevice);
 	deInitCurses();
 }
-void drawHexDump(int xL,int yL,Program p,word offset){
+void drawHexDump(int xL,int yL,VirtualMachine v,word offset){
 //draws out the memory in hex,	16 bytes across, starting at x,y
 	int x,y,i;
 	i=0;
 	for(y=0;y<16;y++){
 		for(x=0;x<16;x++){
-			if(i==p.instructionPointer){
+			if(i==v.instructionPointer){
 				attron(COLOR_PAIR(11));
-				mvprintw(yL+y,xL+(x*2),"%02x",p.memory[i++]);
+				mvprintw(yL+y,xL+(x*2),"%02x",v.memory[i++]);
 				attroff(COLOR_PAIR(11));
 				continue;
 			}
-			if(i==p.dataPointer){
+			if(i==v.dataPointer){
 				attron(COLOR_PAIR(2));
-				mvprintw(yL+y,xL+(x*2),"%02x",p.memory[i++]);
+				mvprintw(yL+y,xL+(x*2),"%02x",v.memory[i++]);
 				attroff(COLOR_PAIR(2));
 				continue;
 			}
-			mvprintw(yL+y,xL+(x*2),"%02x",p.memory[i++]);
+			mvprintw(yL+y,xL+(x*2),"%02x",v.memory[i++]);
 		}
 	}
 }
@@ -75,12 +75,12 @@ void drawProgramOutput(int x, int y, int width, int height){
 	mvprintw(y++,x,"program output>");
 	mvprintw(y++,x,"%s",(outputDevice+offset));
 }
-void drawDisassembly(int xL, int yL,Program p){
+void drawDisassembly(int xL, int yL,VirtualMachine v){
 	int i;
 	Opcode o;
 	for(i=0;i<MAXMEMORY;i++){
-		o = readOpcode(&p,p.entryPoint+i);
-		if(i==p.instructionPointer){
+		o = readOpcode(&v,v.entryPoint+i);
+		if(i==v.instructionPointer){
 			attron(COLOR_PAIR(11));
 			mvprintw(yL,xL+i,"%c",o.code);
 			attroff(COLOR_PAIR(11));
@@ -97,8 +97,8 @@ void drawRegisters(int x, int y/*,Register *regs*/){
 }
 void redraw(){
 	erase();
-	drawDisassembly(0,LINES-8,*program);
-	drawHexDump(COLS-32,0,*program,0);
+	drawDisassembly(0,LINES-8,*virtualMachine);
+	drawHexDump(COLS-32,0,*virtualMachine,0);
 	//drawRegisters(COLS-54,LINES-17,program.regs);
 	//drawCurrentOpcode(COLS-80,LINES-30);
 	drawProgramOutput(0,LINES-7,80,3);

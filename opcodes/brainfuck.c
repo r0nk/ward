@@ -1,9 +1,9 @@
-Opcode readOpcode(Program * program, word address){
+Opcode readOpcode(VirtualMachine * v, word address){
 	Opcode o;
 	o.size=1;
 	o.addr = address;
-	o.code = program->memory[address];
-	o.program = program;
+	o.code = v->memory[address];
+	o.vm = v;
 	return o;
 }
 int isJump(Opcode o){
@@ -23,62 +23,62 @@ word jumpDestination(Opcode o){
 	int i;
 	int nLevel = 0;
 	if(o.code=='['){
-		for(i=1;isValid(readOpcode(o.program,o.addr+i));i++){
-			if(readOpcode(o.program,o.addr+i).code==']'){
+		for(i=1;isValid(readOpcode(o.vm,o.addr+i));i++){
+			if(readOpcode(o.vm,o.addr+i).code==']'){
 				if(nLevel==0)
 					return o.addr+1;
 				nLevel--;
 			}
-			if(readOpcode(o.program,o.addr+i).code=='[')
+			if(readOpcode(o.vm,o.addr+i).code=='[')
 				nLevel++;
 		}
 	}else if(o.code==']'){
-		for(i=1;isValid(readOpcode(o.program,o.addr-i));i++){
-			if(readOpcode(o.program,o.addr-i).code=='['){
+		for(i=1;isValid(readOpcode(o.vm,o.addr-i));i++){
+			if(readOpcode(o.vm,o.addr-i).code=='['){
 				if(nLevel==0)
 					return o.addr-i+1;
 				nLevel--;
 			}
-			if(readOpcode(o.program,o.addr-i).code==']')
+			if(readOpcode(o.vm,o.addr-i).code==']')
 				nLevel++;
 		}
 		return -2;
 	}
 	return -5;
 }
-void doInstruction(Program * program){
-	Opcode o=readOpcode(program,program->instructionPointer);
+void doInstruction(VirtualMachine * v){
+	Opcode o=readOpcode(v,v->instructionPointer);
 	switch(o.code){
 		case '>':
-			program->dataPointer++;
+			v->dataPointer++;
 			break;
 		case '<':
-			program->dataPointer--;
+			v->dataPointer--;
 			break;
 		case '+':
-			program->memory[program->dataPointer]++;
+			v->memory[v->dataPointer]++;
 			break;
 		case '-':
-			program->memory[program->dataPointer]--;
+			v->memory[v->dataPointer]--;
 			break;
 		case '.':
-			programOutput(program->memory[program->dataPointer]);
+			programOutput(v->memory[v->dataPointer]);
 			break;
 		case ',':
-			program->waitingForInput=1;
+			v->waitingForInput=1;
 			break;
 		case '[':
-			if(!program->memory[program->dataPointer]){
-				program->instructionPointer=jumpDestination(o);
+			if(!v->memory[v->dataPointer]){
+				v->instructionPointer=jumpDestination(o);
 				return;
 			}
 			break;
 		case ']':
-			if(program->memory[program->dataPointer]){
-				program->instructionPointer=jumpDestination(o);
+			if(v->memory[v->dataPointer]){
+				v->instructionPointer=jumpDestination(o);
 				return;
 			}
 			break;
 	}
-	program->instructionPointer++;
+	v->instructionPointer++;
 }

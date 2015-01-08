@@ -22,12 +22,12 @@ typedef struct{
 	unsigned char * memory;//mapped memory image
 	word dataPointer;
 	//struct Register regs[100];//process registers
-}Program;
+} VirtualMachine;
 typedef struct{
 	int size;
 	word addr;
 	char code;
-	Program * program;//because we have rare weird jumps, we need a pointer
-			//to our parent program
+	VirtualMachine * vm;//we have weird jumps, so we need a pointer to our 
+			//parent program
 }Opcode;
 #include "brainfuck.c"

@@ -10,15 +10,15 @@ typedef struct{
 	int instructionPointer;
 	unsigned char * memory;//mapped memory image
 	//struct Register regs[100];//process registers
-}Program;
+} VirtualMachine;
 typedef struct{
 	int size;
 	word addr;
 	//...
 }Opcode;
-Opcode readOpcode(Program program,word address);
+Opcode readOpcode(VirtualMachine vm,word address);
 int isJump(Opcode o);
 int isConditionalJump(Opcode o);
 int isValid(Opcode o);
 word jumpDestination(Opcode o);
-void doInstruction(Program program);
+void doInstruction(VirtualMachine vm);

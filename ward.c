@@ -1,21 +1,19 @@
 #include "globals.h"
 //TODO getopt(); support
 
-void initProgram(int pid,char* filename){
+void initVirtualMachine(int pid,char* filename){
 //read the file, get/make the process, generate lattice etc.
-	program = getProgram(0,filename);
-	refreshProgramImage();
-	lattice = generateRootLattice(program);
+	virtualMachine = getProgram(0,filename);
+	//refreshProgramImage();
+	lattice = generateRootLattice(virtualMachine);
 	//displayLattice = generateDisplayLattice(*lattice,20);
 }
 void startLoop(){
-	refreshProgramImage();	
 	redraw();
 	while(1){
 		handle(input());
 		//we only update the lattice when the user asks us to
 		//updateLattice(program,lattice);
-		refreshProgramImage(program);
 		redraw();
 	}
 }
@@ -29,9 +27,9 @@ void handleOptions(int argc,char* argv[]){
 	while((opt=getopt(argc,argv,"pfg"))!=-1){
 		switch(opt){
 			case 'p'://then there specifying a pid to attach to.
+				pid=atoi(optarg);
 				break;
 			case 'f'://then there specifying a file to read from
-				pid=atoi(optarg);
 				break;	
 			case 'g'://gdb||!gdb
 				break;
@@ -45,7 +43,7 @@ void handleOptions(int argc,char* argv[]){
 int main(int argc,char* argv[]){
 	handleOptions(argc,argv);
 	initGraphics();
-	initProgram(0,argv[1]);
+	initVirtualMachine(0,argv[1]);
 	startLoop();
 	return 0;
 }
