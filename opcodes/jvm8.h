@@ -484,7 +484,7 @@ typedef struct {
 		u2 access_flags;
 	} parameters[parameters_count];
 }MethodParameters_attribute
-typedef enum{//if the mnemonics is a c/c++ keyword, its prefixed with '_'
+typedef enum//if the mnemonics is a c/c++ keyword, its prefixed with '_'
 	//constants
 	nop,
 	aconst_null,
@@ -698,7 +698,6 @@ typedef enum{//if the mnemonics is a c/c++ keyword, its prefixed with '_'
 	jsr_w,
 	//reserved
 	breakpoint
-} opcode_mnemonic;
 typedef struct{
 	int size;
 	word addr;

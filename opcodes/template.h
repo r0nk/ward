@@ -17,8 +17,8 @@ typedef struct{
 	//...
 }Opcode;
 Opcode readOpcode(VirtualMachine vm,word address);
-int isJump(Opcode o);
+int isJump(Opcode o);//conditional || unconditional return 1
 int isConditionalJump(Opcode o);
 int isValid(Opcode o);
 word jumpDestination(Opcode o);
-void doInstruction(VirtualMachine vm);
+void doInstruction(VirtualMachine vm);//do the next instruction
