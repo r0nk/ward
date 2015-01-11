@@ -15,12 +15,12 @@ typedef unsigned int word;//CPU bus width
 //ugly hack because many need to access graphics
 void deInitGraphics();
 void programOutput(char c);
-#include "globals.c"
+#include "../ward/globals.c"
 #include "program.h"
 VirtualMachine * virtualMachine;
-#include "program.c"
-#include "wardLattice.c"
+#include "../ward/program.c"
+#include "../ward/wardLattice.c"
 Lattice *lattice;
 Lattice *displayLattice;
 #include "graphics.h"
-#include "interface.c"
+#include "../ward/interface.c"

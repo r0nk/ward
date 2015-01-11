@@ -5,4 +5,4 @@ typedef struct {
 	Element * e;
 	int x,y,z;//location where it was drawn
 }DrawnElement;
-#include "graphics.c"
+#include "../ward/graphics.c"

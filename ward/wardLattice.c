@@ -1,4 +1,4 @@
-#include "lattice.h"
+#include "../include/lattice.h"
 int hasDestination(Lattice l, word destination){
 	if(l.cardinality==0)
 		return 0;

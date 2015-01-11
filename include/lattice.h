@@ -9,4 +9,4 @@ typedef struct{
 	//) when given two elements
 	int cardinality;//(size)
 } Lattice;
-#include "lattice.c"
+#include "../ward/lattice.c"

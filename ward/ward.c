@@ -1,4 +1,4 @@
-#include "globals.h"
+#include "../include/globals.h"
 //TODO getopt(); support
 
 void initVirtualMachine(int pid,char* filename){
