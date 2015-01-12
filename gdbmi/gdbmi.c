@@ -1,6 +1,6 @@
 //TODO not finished
 //This file is used to communicate with gdb. (if its being used)
-int start_gdb(const char *fName){
+int init_gdb(const char *fName){
 	status = "starting gdb";
 	int rpipefd[2];
 	int wpipefd[2];
@@ -15,14 +15,11 @@ int start_gdb(const char *fName){
 	}
 	gdbInput = wpipefd[1];
 	gdbOutput = rpipefd[0];
-	startAndStop();
 	status = "finished initalizing gdb"
 	return 1;
 }
 int getEntryPoint(){/*TODO*/}
-void insertBreak(int addr){//TODO
-	//-break-insert
-}
+void insertBreak(int addr){/*TODO*/}
 void startAndStop(){
 	//sets a breakpoint at the first instruction, 
 	//then starts the program.

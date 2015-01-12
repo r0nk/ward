@@ -1,5 +1,5 @@
 all:
-	gcc ward/ward.c -lncurses -lm  
+	gcc ward/ward.c -lncurses -lm 
 debug:
 	gcc ward/ward.c -lncurses -lm -ggdb -pg
 run:
