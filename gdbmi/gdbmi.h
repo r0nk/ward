@@ -12,5 +12,5 @@
 
 int gdbInput;//the fd we write to
 int gdbOutput;//the fd we read from
-int gdbPID;//the process id of the gdb thread, NOT pid of gdbs debug-e
+int gdbPID;//the pid of gdb, NOT the pid of gdbs debug-e
 #include "gdb.c"
