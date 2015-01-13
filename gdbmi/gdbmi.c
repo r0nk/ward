@@ -1,5 +1,6 @@
 //TODO not finished
 //This file is used to communicate with gdb. (if its being used)
+
 int init_gdb(const char *fName){
 	status = "starting gdb";
 	int rpipefd[2];
@@ -18,6 +19,4 @@ int init_gdb(const char *fName){
 	status = "finished initalizing gdb"
 	return 1;
 }
-void sendGdbMsg(/*message*/){/*TODO send gdb a message*/}
-int parseGdbMsg(){/*TODO parse through and handle a gdb message*/}
-void getGdbMsg(){/*TODO read a message from gdb*/}
+void sendGdbCommand(COMMAND command){/*TODO send gdb a COMMAND*/}
