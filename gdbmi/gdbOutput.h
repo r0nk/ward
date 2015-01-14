@@ -100,6 +100,7 @@ typedef struct{
 } RESULT_RECORD;
 
 typedef struct{ 
+	int numOut;//number of out-of-band-records
 	OUT-OF-BOUND-RECORD * out-of-bound-records;
 	RESULT-RECORD result-record;
 	//"(gdb)"

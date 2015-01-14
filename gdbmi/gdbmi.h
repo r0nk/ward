@@ -5,4 +5,3 @@ int gdbPID;//the pid of gdb, NOT the pid of gdbs debug-e
 typedef char *token;//any sequence of digits
 #include "gdbInput.h"
 #include "gdbOutput.h"
-#include "gdb.c"
