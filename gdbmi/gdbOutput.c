@@ -38,15 +38,19 @@ void getAsyncOutput(int token,char **raw,OUTPUT * out){
 			break;
 	}
 }
-char * getCString(char**raw){
-	//oh god the hacks I'm so sorry
+char * getCString(char ** raw){
+	//Oh god the hacks I'm so sorry,
+	//this is litterally so spaghetti it's making me hungry.
 	int i=0;
-	while(++(*raw[0])!='"')
-		i++;
+	while((*raw[i++])!='"');//store the size of the string in i
 	char * cstring = calloc(sizeof(char),i);
-	(*raw)-=i+1;// go back to the first (")
-	while(++(*raw)!='"')
-		cstring[i++]=*raw[0];
+	i=0;
+	while(*raw[i]!='"'){
+		//store the string in cstring
+		cstring[i]=*raw[i];
+		i++;
+	}
+	*raw+=i+1;//plus 1 to get after the last (")
 	return cstring;
 }
 void getConsoleStreamOutput(char ** raw, OUTPUT * out){
