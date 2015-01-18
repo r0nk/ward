@@ -7,6 +7,6 @@ struct Element{
 	int numDestinations;
 	word *destinations;
 	int numMoreThan;
-	Element ** moreThan;//this isn't an array of elements, because this
-	//element doesn't own them, its parent lattice does.
+	Element ** moreThan;/*this isn't an array of elements, 
+	because this element doesn't own them, its parent lattice does.*/
 };
