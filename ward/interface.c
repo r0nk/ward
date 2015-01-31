@@ -21,22 +21,6 @@ void handle(int in){
 				sendInput(virtualMachine,in);
 			}
 			break;
-		case 'h':
-			if(cX>0)
-				cX--;
-			break;
-		case 'j':
-			if(cY<LINES-1)
-				cY++;
-			break;
-		case 'k':
-			if(cY>0)
-				cY--;
-			break;
-		case 'l':
-			if(cX<COLS-1)
-				cX++;
-			break;
 		case 'q':
 			endwin();
 			exit(0);

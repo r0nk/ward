@@ -2,7 +2,6 @@
 //If it doesn't make sense in this context, it probably shouldn't be a global.
 char *status = "<status>";
 char *debug = "";
-int cX,cY = 0;//cursor x,y
 #define MAXMEMORY 256
 typedef unsigned int word;//CPU bus width
 #include <unistd.h>

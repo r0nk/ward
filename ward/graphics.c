@@ -89,22 +89,14 @@ void drawDisassembly(int xL, int yL,VirtualMachine v){
 		mvprintw(yL,xL+i,"%c",o.code);
 	}
 }
-void drawRegisters(int x, int y/*,Register *regs*/){
-//	int i;
-//	for(i=0;reg[i]!=NULL;i++)
-//		mvprintw(y++,x,"%s:%016llx",regs[i].name,regs[i].value);
-	;
-}
 void redraw(){
 	erase();
 	drawDisassembly(0,LINES-8,*virtualMachine);
 	drawHexDump(COLS-32,0,*virtualMachine,0);
-	//drawRegisters(COLS-54,LINES-17,program.regs);
-	//drawCurrentOpcode(COLS-80,LINES-30);
 	drawProgramOutput(0,LINES-7,80,3);
 	drawStatus(0,LINES-1);
 	drawLattice(*lattice,5,1);
-	move(cY,cX);
+	move(0,0);//move the cursor out of the way
 	refresh();
 }
 void programOutput(char c){
