@@ -15,7 +15,7 @@ void readFile(char * filename,char * memory){
 	//checkMagic(fp);
 	if(!fp)
 		errExit("!fp",1);
-	for(i=0;i<956;i++){
+	for(i=0;i<956;i++){//TODO random 956 magic number
 		memory[i]=fgetc(fp);
 		if(memory[i]==EOF){
 			memory[i]=0;

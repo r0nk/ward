@@ -1,13 +1,5 @@
 #include "../include/globals.h"
-//TODO getopt(); support
 
-void initVirtualMachine(int pid,char* filename){
-//read the file, get/make the process, generate lattice etc.
-	virtualMachine = getProgram(0,filename);
-	//refreshProgramImage();
-	lattice = generateRootLattice(virtualMachine);
-	//displayLattice = generateDisplayLattice(*lattice,20);
-}
 void startLoop(){
 	redraw();
 	while(1){
@@ -31,8 +23,6 @@ void handleOptions(int argc,char* argv[]){
 				break;
 			case 'f'://then there specifying a file to read from
 				break;	
-			case 'g'://gdb||!gdb
-				break;
 			default:
 				printf("usage: ward -f <filename>\n"
 						"or ward -p <pid>\n");
@@ -43,7 +33,8 @@ void handleOptions(int argc,char* argv[]){
 int main(int argc,char* argv[]){
 	handleOptions(argc,argv);
 	initGraphics();
-	initVirtualMachine(0,argv[1]);
+	virtualMachine = getProgram(0,filename);
+	lattice = generateRootLattice(virtualMachine);
 	startLoop();
 	return 0;
 }
